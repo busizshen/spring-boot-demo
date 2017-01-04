@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.ecej</groupId>
+	<artifactId>spring-boot-demo</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>spring-boot-demo</name>
+	<description>Demo project for Spring Boot</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.4.0.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+	</properties>
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<ecej.zookeeper.connect>localhost:2181</ecej.zookeeper.connect>
+				<!-- <ecej.zookeeper.connect>10.4.89.152:2181,10.4.89.153:2181,10.4.89.154:2181</ecej.zookeeper.connect> -->
+
+				<!-- dubbo -->
+				<ecej.dubbo.provider.timeout>10000</ecej.dubbo.provider.timeout>
+				<ecej.dubbo.provider.retries>0</ecej.dubbo.provider.retries>
+				<ecej.dubbo.provider.version>1.0</ecej.dubbo.provider.version>
+				<ecej.dubbo.provider.connections>5</ecej.dubbo.provider.connections>
+				<ecej.dubbo.protocol.threadpool>fixed</ecej.dubbo.protocol.threadpool>
+				<ecej.dubbo.protocol.threads>500</ecej.dubbo.protocol.threads>
+				
+				<!-- dubbo cache file path -->
+				<ecej.dubbo.cache.path.base>/data/dubbo/cache/base.cache</ecej.dubbo.cache.path.base>
+
+				<!-- redis -->
+				<ecej.redis.cluster>10.4.89.161:6379</ecej.redis.cluster>
+				<ecej.redis.pool.maxTotal>1000</ecej.redis.pool.maxTotal>
+				<ecej.redis.pool.maxIdle>10</ecej.redis.pool.maxIdle>
+				<ecej.redis.pool.maxWaitMillis>3000</ecej.redis.pool.maxWaitMillis>
+				<ecej.redis.timeOut>5000</ecej.redis.timeOut>
+				<ecej.redis.maxRedirections>10</ecej.redis.maxRedirections>
+
+				<!-- MQ -->
+				<ecej.mq.url>failover:(tcp://10.4.89.155:61616,tcp://10.4.89.156:61616,tcp://10.4.89.157:61616)?randomize=false</ecej.mq.url>
+				<ecej.mq.factor.username></ecej.mq.factor.username>
+				<ecej.mq.factor.password></ecej.mq.factor.password>
+				<ecej.mq.pool.maxConnections>5</ecej.mq.pool.maxConnections>
+				<ecej.mq.pool.activeSessionPerConnection>2</ecej.mq.pool.activeSessionPerConnection>
+				<ecej.mq.pool.expirationCheckMillis>3000</ecej.mq.pool.expirationCheckMillis>
+				
+
+				<!-- druid config -->
+				<ecej.druid.initialSize>0</ecej.druid.initialSize>
+				<ecej.druid.maxActive>500</ecej.druid.maxActive>
+				<ecej.druid.minIdle>50</ecej.druid.minIdle>
+				<ecej.druid.maxWait>60000</ecej.druid.maxWait>
+				<ecej.druid.removeAbandoned>true</ecej.druid.removeAbandoned>
+				<ecej.druid.removeAbandonedTimeout>180</ecej.druid.removeAbandonedTimeout>
+				<ecej.druid.timeBetweenEvictionRunsMillis>60000</ecej.druid.timeBetweenEvictionRunsMillis>
+				<ecej.druid.minEvictableIdleTimeMillis>3600000</ecej.druid.minEvictableIdleTimeMillis>
+				<ecej.druid.validationQuery>SELECT USER()</ecej.druid.validationQuery>
+				<ecej.druid.testWhileIdle>true</ecej.druid.testWhileIdle>
+				<ecej.druid.testOnBorrow>false</ecej.druid.testOnBorrow>
+				<ecej.druid.testOnReturn>false</ecej.druid.testOnReturn>
+				<ecej.druid.filters>mergeStat,config</ecej.druid.filters>
+				<ecej.druid.connectionProperties>config.decrypt=false</ecej.druid.connectionProperties>
+
+				<!--  base -->
+				<ecej.base.datasource.url>jdbc:mysql://localhost:3306/ecej</ecej.base.datasource.url>
+				<ecej.base.datasource.username>root</ecej.base.datasource.username>
+				<ecej.base.datasource.password>root</ecej.base.datasource.password>
+				
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+	</profiles>
+	<dependencies>
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		 <!--druid-->  
+	    <dependency>    
+	      <groupId>com.alibaba</groupId>    
+	      <artifactId>druid</artifactId>    
+	      <version>1.0.20</version>  
+	    </dependency>
+	     <!-- mybatis 分页插件 -->  
+	    <dependency>    
+	      <groupId>com.github.pagehelper</groupId>    
+	      <artifactId>pagehelper</artifactId>    
+	      <version>4.1.6</version>  
+	    </dependency>  
+	    <dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.2.7</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-jdbc</artifactId>
+		</dependency>
+		<dependency>
+        	<groupId>com.nove</groupId>
+        	<artifactId>ecej-core</artifactId>
+        	<version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        	<!-- log -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+			  <groupId>org.apache.logging.log4j</groupId>
+			  <artifactId>log4j-core</artifactId>
+			  <version>2.6.1</version>
+			</dependency>
+			<dependency>
+			  <groupId>org.apache.logging.log4j</groupId>
+			  <artifactId>log4j-api</artifactId>
+			  <version>2.6.1</version>
+			</dependency>
+			<dependency>
+	            <groupId>org.apache.logging.log4j</groupId>
+	            <artifactId>log4j-slf4j-impl</artifactId>
+	            <version>2.6.1</version>
+        	</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
+				 <version>1.7.7</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jul-to-slf4j</artifactId>
+			  	<version>1.7.7</version>
+			</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>

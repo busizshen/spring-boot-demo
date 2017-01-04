@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ecej.boot.demo.po.Demo">
+	<resultMap id="BaseResultMap" type="com.ecej.boot.demo.po.Demo">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="age" property="age" />
+	</resultMap>
+
+	<sql id="Table_Name">
+		demo
+	</sql>
+
+	<sql id="Base_Column">
+		id,
+		name,
+		age
+	</sql>
+
+	<sql id="Base_Where">
+		<trim suffixOverrides="AND">
+		<if test="name != null">
+			name= #{name}
+	           AND 
+		</if>
+		<if test="age != null">
+			age= #{age}
+		</if>
+	
+		</trim>
+	</sql>
+	
+    <sql id="Base_Select">
+			select
+		<include refid="Base_Column" />
+		from
+		<include refid="Table_Name" />
+		<where>
+			<include refid="Base_Where" />
+		</where>
+	</sql>
+
+
+
+	<insert id="insert" parameterType="com.ecej.boot.demo.po.Demo" useGeneratedKeys="true" keyProperty="reasonSettingId">
+		insert into
+		<include refid="Table_Name" />
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+	<if test="name != null">
+		name,
+	</if>
+	<if test="age != null">
+		age
+	</if>
+	
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+	<if test="name != null">
+		#{name},
+	</if>
+	<if test="age != null">
+		#{age}
+	</if>
+		</trim>
+	</insert>
+	
+
+	<update id="update" parameterType="com.ecej.boot.demo.po.Demo">
+		update
+		<include refid="Table_Name" />
+		<set>
+	<if test="reasonSettingId != null">
+		reason_setting_id=#{reasonSettingId},
+	</if>
+	<if test="reasonType != null">
+		reason_type=#{reasonType},
+	</if>
+	<if test="reasonCodeNo != null">
+		reason_code_no=#{reasonCodeNo},
+	</if>
+	<if test="reasonDesc != null">
+		reason_desc=#{reasonDesc},
+	</if>
+	<if test="moneyLimitFlag != null">
+		money_limit_flag=#{moneyLimitFlag},
+	</if>
+	<if test="workOrderLimitFlag != null">
+		work_order_limit_flag=#{workOrderLimitFlag},
+	</if>
+	<if test="createUser != null">
+		create_user=#{createUser},
+	</if>
+	<if test="createTime != null">
+		create_time=#{createTime},
+	</if>
+	<if test="updateUser != null">
+		update_user=#{updateUser},
+	</if>
+	<if test="updateTime != null">
+		update_time=#{updateTime},
+	</if>
+		</set>
+		where 
+			      reason_setting_id=#{reasonSettingId}
+	</update>
+
+	<update id="updateByEntity" parameterType="com.ecej.boot.demo.po.Demo">
+		UPDATE
+		<include refid="Table_Name" />
+		<set>
+			<if test="s.reasonType != null">
+                    reason_type=#{s.reasonType},
+			</if>
+			<if test="s.reasonCodeNo != null">
+                    reason_code_no=#{s.reasonCodeNo},
+			</if>
+			<if test="s.reasonDesc != null">
+                    reason_desc=#{s.reasonDesc},
+			</if>
+			<if test="s.moneyLimitFlag != null">
+                    money_limit_flag=#{s.moneyLimitFlag},
+			</if>
+			<if test="s.workOrderLimitFlag != null">
+                    work_order_limit_flag=#{s.workOrderLimitFlag},
+			</if>
+			<if test="s.createUser != null">
+                    create_user=#{s.createUser},
+			</if>
+			<if test="s.createTime != null">
+                    create_time=#{s.createTime},
+			</if>
+			<if test="s.updateUser != null">
+                    update_user=#{s.updateUser},
+			</if>
+			<if test="s.updateTime != null">
+                    update_time=#{s.updateTime}
+			</if>
+		</set>
+		<where> 
+			<trim prefix="(" suffix=")" suffixOverrides="AND">
+			<if test="w.reasonSettingId != null">
+                    reason_setting_id=#{w.reasonSettingId}
+	                   AND 
+ 			</if>
+			<if test="w.reasonType != null">
+                    reason_type=#{w.reasonType}
+	                   AND 
+ 			</if>
+			<if test="w.reasonCodeNo != null">
+                    reason_code_no=#{w.reasonCodeNo}
+	                   AND 
+ 			</if>
+			<if test="w.reasonDesc != null">
+                    reason_desc=#{w.reasonDesc}
+	                   AND 
+ 			</if>
+			<if test="w.moneyLimitFlag != null">
+                    money_limit_flag=#{w.moneyLimitFlag}
+	                   AND 
+ 			</if>
+			<if test="w.workOrderLimitFlag != null">
+                    work_order_limit_flag=#{w.workOrderLimitFlag}
+	                   AND 
+ 			</if>
+			<if test="w.createUser != null">
+                    create_user=#{w.createUser}
+	                   AND 
+ 			</if>
+			<if test="w.createTime != null">
+                    create_time=#{w.createTime}
+	                   AND 
+ 			</if>
+			<if test="w.updateUser != null">
+                    update_user=#{w.updateUser}
+	                   AND 
+ 			</if>
+			<if test="w.updateTime != null">
+                    update_time=#{w.updateTime}
+ 			</if>
+			</trim>
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="com.ecej.boot.demo.po.Demo">
+		delete from
+		<include refid="Table_Name" />
+		<where>
+			<include refid="Base_Where" />
+		</where>
+	</delete>
+
+	<select id="count" parameterType="java.util.Map" resultType="int">
+		select count(1) from
+		<include refid="Table_Name" />
+		<where>
+			<include refid="Base_Where" />
+		</where>
+	</select>
+
+	<select id="selectOne" parameterType="com.ecej.boot.demo.po.Demo" resultMap="BaseResultMap">
+	  <include refid="Base_Select" />
+	</select>
+
+	<select id="selectList"  parameterType="com.ecej.boot.demo.po.Demo" resultMap="BaseResultMap">
+	    <include refid="Base_Select" />
+	</select>
+		
+
+     <select id="selectForUpdate" parameterType="com.ecej.boot.demo.po.Demo" resultMap="BaseResultMap" useCache="false">
+		 <include refid="Base_Select" />
+		for update
+	</select>
+	
+
+</mapper>
